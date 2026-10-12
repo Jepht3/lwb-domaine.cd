@@ -272,11 +272,62 @@ function lwbdomainecd_CheckAvailability($params)
     );
 }
 
+/** Nombre maximal d'extensions suggérées (chaque extension hors .cd coûte une requête WHOIS). */
+const LWBDOMAINECD_MAX_SUGGESTIONS = 12;
+
+/**
+ * Réglages des suggestions, affichés dans la configuration du Lookup Provider.
+ * Avec un module registraire, WHMCS ne transmet pas de liste d'extensions à suggérer.
+ */
+function lwbdomainecd_DomainSuggestionOptions()
+{
+    return [
+        'suggestTlds' => [
+            'FriendlyName' => 'Extensions suggérées',
+            'Type' => 'text',
+            'Size' => '60',
+            'Default' => '',
+            'Description' => 'Séparées par des virgules (' . LWBDOMAINECD_MAX_SUGGESTIONS . ' au maximum). Vide : la liste des suggestions WHOIS de WHMCS, sinon .cd, .ac.cd, .org.cd, .com, .net, .org.',
+        ],
+    ];
+}
+
+/**
+ * Extensions à suggérer : celles transmises par WHMCS, sinon le réglage du module,
+ * sinon la liste des suggestions WHOIS déjà configurée dans WHMCS.
+ *
+ * @return string[]
+ */
+function lwbdomainecd_suggestion_tlds(array $params): array
+{
+    $tlds = (array) ($params['tldsToInclude'] ?? []);
+    if (!$tlds) {
+        $text = trim((string) ($params['suggestionSettings']['suggestTlds'] ?? ''));
+        if ($text === '') {
+            try {
+                $text = (string) \WHMCS\Database\Capsule::table('tbldomain_lookup_configuration')
+                    ->where('registrar', 'WhmcsWhois')->where('setting', 'suggestTlds')->value('value');
+            } catch (\Throwable $e) {
+                $text = '';
+            }
+        }
+        $tlds = preg_split('/[\s,]+/', $text !== '' ? $text : '.cd,.ac.cd,.org.cd,.com,.net,.org') ?: [];
+    }
+    $out = [];
+    foreach ($tlds as $tld) {
+        $tld = '.' . ltrim(strtolower(trim((string) $tld)), '.');
+        if ($tld !== '.' && !in_array($tld, $out, true)) {
+            $out[] = $tld;
+        }
+    }
+    return array_slice($out, 0, LWBDOMAINECD_MAX_SUGGESTIONS);
+}
+
 function lwbdomainecd_GetDomainSuggestions($params)
 {
     return lwbdomainecd_results(
         lwbdomainecd_search_term($params),
-        (array) ($params['tldsToInclude'] ?? []),
+        lwbdomainecd_suggestion_tlds($params),
         $params,
         !empty($params['otherTlds'])
     );

@@ -53,6 +53,7 @@ automatiquement à la première recherche.
 | Cache « pris / réservé » | 10 min | |
 | Cache « libre » | 2 min | |
 | Requêtes max. par minute et par IP | 20 | les conditions du WHOIS interdisent les requêtes massives ; 0 = pas de limite |
+| Extensions suggérées (réglages du Lookup Provider) | vide | extensions proposées quand le client tape un nom sans extension (12 au maximum) ; vide = la liste de suggestions WHOIS déjà configurée dans WHMCS, sinon `.cd, .ac.cd, .org.cd, .com, .net, .org` |
 | Autres extensions | cochée | le Lookup Provider s'applique à **toutes** les extensions : cochée, `.com`, `.net`… sont vérifiées par le WHOIS standard de WHMCS ; décochée, elles sont ignorées et n'apparaissent plus dans les résultats |
 
 ## Ouvrir le port 43 sortant (CSF)
