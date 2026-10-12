@@ -230,7 +230,7 @@ function lwbdomainecd_search_status(string $status): string
 /**
  * @param string[] $tlds
  */
-function lwbdomainecd_results(string $sld, array $tlds, array $params, bool $includeOthers): ResultsList
+function lwbdomainecd_results(string $sld, array $tlds, array $params, bool $includeOthers, bool $onlyAvailable = false): ResultsList
 {
     $results = new ResultsList();
     $cd = lwbdomainecd_extensions($params);
@@ -245,6 +245,9 @@ function lwbdomainecd_results(string $sld, array $tlds, array $params, bool $inc
         } elseif ($includeOthers) {
             $status = lwbdomainecd_other_status($sld . $tld);
         } else {
+            continue;
+        }
+        if ($onlyAvailable && $status !== ResponseParser::AVAILABLE) {
             continue;
         }
         $result = new SearchResult($sld, $tld);
@@ -286,8 +289,8 @@ function lwbdomainecd_DomainSuggestionOptions()
             'FriendlyName' => 'Extensions suggérées',
             'Type' => 'text',
             'Size' => '60',
-            'Default' => '',
-            'Description' => 'Séparées par des virgules (' . LWBDOMAINECD_MAX_SUGGESTIONS . ' au maximum). Vide : la liste des suggestions WHOIS de WHMCS, sinon .cd, .ac.cd, .org.cd, .com, .net, .org.',
+            'Default' => '.cd,.ac.cd,.gouv.cd,.edu.cd,.com,.net,.org,.biz,.info,.blog,.ca,.club',
+            'Description' => 'Séparées par des virgules (' . LWBDOMAINECD_MAX_SUGGESTIONS . ' au maximum). Ne pas laisser vide : WHMCS ne demande des suggestions au module que si cette liste est remplie. Seuls les noms libres sont proposés.',
         ],
     ];
 }
@@ -311,7 +314,7 @@ function lwbdomainecd_suggestion_tlds(array $params): array
                 $text = '';
             }
         }
-        $tlds = preg_split('/[\s,]+/', $text !== '' ? $text : '.cd,.ac.cd,.org.cd,.com,.net,.org') ?: [];
+        $tlds = preg_split('/[\s,]+/', $text !== '' ? $text : '.cd,.ac.cd,.gouv.cd,.edu.cd,.com,.net,.org') ?: [];
     }
     $out = [];
     foreach ($tlds as $tld) {
@@ -331,7 +334,9 @@ function lwbdomainecd_GetDomainSuggestions($params)
         'tldsToInclude' => $params['tldsToInclude'] ?? null,
         'suggestionSettings' => $params['suggestionSettings'] ?? null,
     ], implode(', ', $tlds), count($tlds) . ' extension(s)');
-    return lwbdomainecd_results(lwbdomainecd_search_term($params), $tlds, $params, !empty($params['otherTlds']));
+    // La page de commande de WHMCS affiche chaque suggestion comme disponible :
+    // on ne renvoie donc que les noms réellement libres.
+    return lwbdomainecd_results(lwbdomainecd_search_term($params), $tlds, $params, !empty($params['otherTlds']), true);
 }
 
 function lwbdomainecd_RegisterDomain($params)
