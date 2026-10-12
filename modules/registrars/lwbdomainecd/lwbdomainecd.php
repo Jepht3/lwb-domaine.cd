@@ -325,12 +325,13 @@ function lwbdomainecd_suggestion_tlds(array $params): array
 
 function lwbdomainecd_GetDomainSuggestions($params)
 {
-    return lwbdomainecd_results(
-        lwbdomainecd_search_term($params),
-        lwbdomainecd_suggestion_tlds($params),
-        $params,
-        !empty($params['otherTlds'])
-    );
+    $tlds = lwbdomainecd_suggestion_tlds($params);
+    logModuleCall('lwbdomainecd', 'suggestions', [
+        'recherche' => lwbdomainecd_search_term($params),
+        'tldsToInclude' => $params['tldsToInclude'] ?? null,
+        'suggestionSettings' => $params['suggestionSettings'] ?? null,
+    ], implode(', ', $tlds), count($tlds) . ' extension(s)');
+    return lwbdomainecd_results(lwbdomainecd_search_term($params), $tlds, $params, !empty($params['otherTlds']));
 }
 
 function lwbdomainecd_RegisterDomain($params)
