@@ -1,7 +1,7 @@
 # LWB Domaine .cd — vérification des noms en .cd pour WHMCS
 
 Module « registrar » WHMCS (`lwbdomainecd`) qui affiche le **vrai statut** des noms de domaine
-en `.cd`, `.ac.cd`, `.gouv.cd`, `.com.cd`, `.net.cd` et `.org.cd` dans la recherche de domaines
+en `.cd`, `.ac.cd`, `.edu.cd`, `.gouv.cd`, `.com.cd`, `.net.cd` et `.org.cd` dans la recherche de domaines
 de WHMCS, en interrogeant directement le WHOIS du registre (`whois.nic.cd`, port 43).
 
 - Il sert **uniquement à la vérification de disponibilité**. Il n'enregistre aucun domaine :
@@ -47,7 +47,7 @@ automatiquement à la première recherche.
 |---|---|---|
 | Serveur WHOIS / port | `whois.nic.cd` / `43` | serveur du registre .cd |
 | Délai d'attente | 5 s | au-delà : statut « inconnu » |
-| Extensions .cd gérées | `.cd .ac.cd .gouv.cd .com.cd .net.cd .org.cd` | une par ligne |
+| Extensions .cd gérées | `.cd .ac.cd .edu.cd .gouv.cd .com.cd .net.cd .org.cd` | une par ligne |
 | Phrases « domaine libre » | `No Object Found`, `No match`, `No Data Found`, `not found`, `is available` | une par ligne ; la première est celle du registre |
 | Phrases « réservé » | `Registrar: NIC Reserved` | les statuts `inactive` et `serverHold` sont toujours non disponibles |
 | Cache « pris / réservé » | 10 min | |

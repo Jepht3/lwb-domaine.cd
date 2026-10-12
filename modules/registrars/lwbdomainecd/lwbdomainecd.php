@@ -72,7 +72,7 @@ function lwbdomainecd_getConfigArray()
             'FriendlyName' => 'Extensions .cd gérées',
             'Type' => 'textarea',
             'Rows' => '6',
-            'Default' => ".cd\n.ac.cd\n.gouv.cd\n.com.cd\n.net.cd\n.org.cd",
+            'Default' => ".cd\n.ac.cd\n.edu.cd\n.gouv.cd\n.com.cd\n.net.cd\n.org.cd",
             'Description' => 'Une par ligne. Ces extensions sont vérifiées auprès du registre.',
         ],
         'freePhrases' => [
@@ -122,7 +122,7 @@ function lwbdomainecd_extensions(array $params): array
 {
     $text = trim((string) ($params['extensions'] ?? ''));
     if ($text === '') {
-        $text = ".cd\n.ac.cd\n.gouv.cd\n.com.cd\n.net.cd\n.org.cd";
+        $text = ".cd\n.ac.cd\n.edu.cd\n.gouv.cd\n.com.cd\n.net.cd\n.org.cd";
     }
     $out = [];
     foreach (preg_split('/[\s,]+/', strtolower($text)) ?: [] as $ext) {
