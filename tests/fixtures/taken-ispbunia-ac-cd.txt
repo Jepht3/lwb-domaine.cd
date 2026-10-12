@@ -1,0 +1,20 @@
+Domain Name: ispbunia.ac.cd
+Registry Domain ID: 33365-niccd
+Registry WHOIS Server: whois.nic.cd
+Updated Date: 2026-10-12T10:20:43.877Z
+Creation Date: 2026-10-12T10:17:55.907Z
+Registry Expiry Date: 2027-10-12T10:17:56.0Z
+Registrar Registration Expiration Date: 2027-10-12T10:17:56.0Z
+Registrar: SCPT
+Domain Status: addPeriod https://icann.org/epp#addPeriod
+Domain Status: ok https://icann.org/epp#ok
+Registry Registrant ID: REDACTED
+Registrant Name: REDACTED
+Registrant Country: CD
+Registrant Email: REDACTED
+Name Server: ns1.lewebmax.com
+Name Server: ns2.lewebmax.com
+DNSSEC: unsigned
+>>> Last update of WHOIS database: 2026-10-12T10:20:43.844Z <<<
+
+TERMS OF USE: You are not authorized to access or query our WHOIS database through the use of electronic processes that are high-volume and automated.

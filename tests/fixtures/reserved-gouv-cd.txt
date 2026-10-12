@@ -1,0 +1,13 @@
+Domain Name: gouv.cd
+Registry Domain ID: 7-niccd
+Registry WHOIS Server: whois.nic.cd
+Updated Date: 2025-02-04T14:26:08.557Z
+Creation Date: 2021-01-15T00:00:00.0Z
+Registry Expiry Date: 2050-12-31T00:00:00.0Z
+Registrar: NIC Reserved 
+Domain Status: inactive https://icann.org/epp#inactive
+Registrant Organization: Office Congolais des Postes et Telecommunications - OCPT
+DNSSEC: unsigned
+>>> Last update of WHOIS database: 2026-10-12T10:20:43.844Z <<<
+
+TERMS OF USE: You are not authorized to access or query our WHOIS database through the use of electronic processes that are high-volume and automated.
